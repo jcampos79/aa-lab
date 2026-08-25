@@ -1,0 +1,32 @@
+# ── Copy to terraform.tfvars and edit ────────────────────────────────────────
+
+# Local KVM (default).
+# For a remote KVM host (native SSH, respects ~/.ssh/config):
+#   libvirt_uri = "qemu+sshcmd://ubuntu@192.168.1.10/system"
+libvirt_uri = "qemu:///system"
+
+# Where disk images are stored on the KVM host
+storage_pool_path = "/var/lib/libvirt/images/k8s"
+
+# Ubuntu 22.04 cloud image.
+# To use a locally cached copy (faster, avoids re-download):
+#   base_image_url = "file:///var/lib/libvirt/images/jammy-server-cloudimg-amd64.img"
+base_image_url = "https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img"
+
+ssh_public_key_path = "~/.ssh/id_rsa.pub"
+
+# Network — same CIDR as original project so MetalLB/nip.io URLs are unchanged
+network_cidr = "10.0.1.0/24"
+dns_server   = "8.8.8.8"
+
+# Disk: 40 GiB per node
+disk_size_bytes = 42949672960
+
+# Master: 2 vCPU / 4 GiB (minimum — bump to 8 GiB for full observability stack)
+master_vcpus     = 2
+master_memory_mb = 4096
+
+# Workers
+worker_count     = 2
+worker_vcpus     = 2
+worker_memory_mb = 4096
